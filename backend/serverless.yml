@@ -1,0 +1,25 @@
+
+service: auth0-backend
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: us-east-1
+
+
+functions:
+  hello:
+    handler: src/hello/handler.hello
+    events:
+      - http:
+          method: get
+          path: hello
+          cors: true
+          authorizer: authorizerFunc
+  authorizerFunc:
+    handler: src/authorizer/handler.handler
+    environment:
+      AUTH0_BASE_URL: tvs-dev.auth0.com
+
+          
